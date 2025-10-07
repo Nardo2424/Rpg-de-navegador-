@@ -42,7 +42,7 @@ let hasKey = false;
 
 const levels = {
     1: {
-        nome: "Floresta dos Iniciantes",
+        nome: "",
         objetivo: "Colete 3 itens",
         backgroundColor: "#2d4a2e",
         itemsNeeded: 3
@@ -58,6 +58,12 @@ const levels = {
         objetivo: "Encontre a saída!",
         backgroundColor: "#4a2d2d",
         hasExit: true
+    },
+    4: {
+        nome: "Correr é covardia",
+        objetivo: "Fuja do cadeirante bombado",
+        backgroundColor: "#170b86ff",
+        enemiesdDefeated: 1
     }
 };
 
@@ -628,6 +634,12 @@ function setupLevel3() {
     createItems();
     createEnemies();
     createExitDoor();
+}
+
+function setupLevel4(){
+    items = [
+    { x: 250}
+    ]
 }
 
 function createExitDoor() {

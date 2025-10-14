@@ -11,13 +11,13 @@ const gameWorld = document.getElementById('game-world');
 // ===================================
 
 let character = {
-    nome: "Herói",
+    nome: "Capturado",
     classe: "Guerreiro",
     vida: 100,
-    vidaMaxima: 100,
+    vidaMaxima: 500,
     nivel: 1,
     experiencia: 0,
-    emoji: "🧙"
+    emoji: "⚔️"
 };
 
 // ===================================
@@ -42,26 +42,26 @@ let hasKey = false;
 
 const levels = {
     1: {
-        nome: "",
-        objetivo: "Colete 3 itens",
+        nome: "Teste 1",
+        objetivo: "Fuja dos macacos e resgate seus companheiros",
         backgroundColor: "#2d4a2e",
         itemsNeeded: 3
     },
     2: {
-        nome: "Caverna Sombria",
-        objetivo: "Sobreviva por 30 segundos",
+        nome: "Teste 2",
+        objetivo: "Sobreviva por 10 segundos aos homens armados",
         backgroundColor: "#1a1a2e",
-        timeLimit: 30
+        timeLimit: 10
     },
     3: {
-        nome: "Castelo Final",
+        nome: "Portão",
         objetivo: "Encontre a saída!",
         backgroundColor: "#4a2d2d",
         hasExit: true
     },
     4: {
-        nome: "Correr é covardia",
-        objetivo: "Fuja do cadeirante bombado",
+        nome: "Coliseu",
+        objetivo: "Derrote o Gladiador e atinja a glória",
         backgroundColor: "#170b86ff",
         enemiesdDefeated: 1
     }
@@ -582,6 +582,10 @@ function startLevel(levelNumber) {
         setupLevel2();
     } else if (levelNumber === 3) {
         setupLevel3();
+
+    } else if (levelNumber === 4) {
+        setupLevel4();    
+
     }
     
     updateInfoPanel();
@@ -589,14 +593,17 @@ function startLevel(levelNumber) {
 
 function setupLevel1() {
     items = [
-        { x: 200, y: 100, tipo: "moeda", emoji: "💰", valor: 10 },
-        { x: 400, y: 200, tipo: "poção", emoji: "🧪", valor: 20 },
-        { x: 600, y: 150, tipo: "estrela", emoji: "⭐", valor: 50 },
-        { x: 300, y: 300, tipo: "diamante", emoji: "💎", valor: 30 }
+        { x: 200, y: 100, tipo: "Guerreiro Púnico", emoji: "🗡️", valor: 10 },
+        { x: 400, y: 200, tipo: "Minerador dos Balcãs", emoji: "⛏️", valor: 20 },
+        { x: 600, y: 150, tipo: "Escravo Romano", emoji: "⚔️", valor: 50 },
+        { x: 300, y: 300, tipo: "Mogger", emoji: "🗿", valor: 30 }
     ];
     
     enemies = [
-        { x: 350, y: 100, direcao: 1, velocidade: 2, emoji: "🐛", dano: 5 }
+        { x: 350, y: 100, direcao: 1, velocidade: 2, emoji: "🦍", dano: 5 },
+        { x: 550, y: 200, direcao: 1, velocidade: 2, emoji: "🦍", dano: 5 },
+        { x: 650, y: 300, direcao: 1, velocidade: 2, emoji: "🦍", dano: 5 },
+        { x: 450, y: 400, direcao: 1, velocidade: 2, emoji: "🦍", dano: 5 }
     ];
     
     createItems();
@@ -612,9 +619,9 @@ function setupLevel2() {
     ];
     
     enemies = [
-        { x: 300, y: 100, direcao: 1, velocidade: 3, emoji: "🦇", dano: 10 },
-        { x: 500, y: 250, direcao: -1, velocidade: 4, emoji: "👻", dano: 15 },
-        { x: 200, y: 300, direcao: 1, velocidade: 2, emoji: "🕷️", dano: 8 }
+        { x: 300, y: 100, direcao: 1, velocidade: 4, emoji: "😡🗡️", dano: 25 },
+        { x: 500, y: 200, direcao: -1, velocidade: 4, emoji: "😡🗡️", dano: 25 },
+        { x: 200, y: 300, direcao: 1, velocidade: 4, emoji: "😡🗡️", dano: 25 }
     ];
     
     createItems();
@@ -627,8 +634,8 @@ function setupLevel3() {
     ];
     
     enemies = [
-        { x: 200, y: 150, direcao: 1, velocidade: 2, emoji: "🐉", dano: 20 },
-        { x: 600, y: 200, direcao: -1, velocidade: 3, emoji: "⚔️", dano: 18 }
+        { x: 200, y: 100, direcao: 1, velocidade: 4, emoji: "😡🗡️", dano: 25 },
+        { x: 600, y: 200, direcao: -1, velocidade: 4, emoji: "😡🗡️", dano: 25 }
     ];
     
     createItems();
@@ -638,7 +645,7 @@ function setupLevel3() {
 
 function setupLevel4(){
     items = [
-    { x: 250}
+
     ]
 }
 
@@ -678,10 +685,9 @@ function checkLevelComplete() {
         let distanceX = Math.abs(playerX - exitDoor.x);
         let distanceY = Math.abs(playerY - exitDoor.y);
         
-        if (distanceX < 40 && distanceY < 40) {
+        if (distanceX < 1000 && distanceY < 1000 ) {
             if (hasKey) {
-                alert("🏆 PARABÉNS! Você completou TODAS as fases!\n\n🔑 Você usou a chave e escapou!\n⭐ Pontuação Final: " + character.experiencia + " EXP");
-                location.reload();
+                startLevel(4);
             } else {
                 alert("🚪 A porta está trancada! Você precisa encontrar a CHAVE 🔑 primeiro!");
                 console.log("⚠️ Procure pela chave 🔑 antes de tentar abrir a porta!");
@@ -793,4 +799,4 @@ console.log("   ⬆️⬇️⬅️➡️ = Mover");
 console.log("   ESPAÇO = Atacar");
 console.log("   SHIFT = Dash");
 console.log("===================================");
-console.log("Boa sorte, aventureiro! 🗡️");
+console.log("Vai pra cima guerreiro! 🗡️");

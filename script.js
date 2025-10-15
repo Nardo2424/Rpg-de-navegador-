@@ -61,7 +61,7 @@ const levels = {
     },
     4: {
         nome: "Coliseu",
-        objetivo: "Derrote o Gladiador e atinja a glória",
+        objetivo: "Derrote os Gladiadores e atinja a glória",
         backgroundColor: "#170b86ff",
         enemiesdDefeated: 1
     }
@@ -594,16 +594,15 @@ function startLevel(levelNumber) {
 function setupLevel1() {
     items = [
         { x: 200, y: 100, tipo: "Guerreiro Púnico", emoji: "🗡️", valor: 10 },
-        { x: 400, y: 200, tipo: "Minerador dos Balcãs", emoji: "⛏️", valor: 20 },
+        { x: 400, y: 200, tipo: "Minerador da Illyria", emoji: "⛏️", valor: 20 },
         { x: 600, y: 150, tipo: "Escravo Romano", emoji: "⚔️", valor: 50 },
-        { x: 300, y: 300, tipo: "Mogger", emoji: "🗿", valor: 30 }
     ];
     
     enemies = [
-        { x: 350, y: 100, direcao: 1, velocidade: 2, emoji: "🦍", dano: 5 },
-        { x: 550, y: 200, direcao: 1, velocidade: 2, emoji: "🦍", dano: 5 },
-        { x: 650, y: 300, direcao: 1, velocidade: 2, emoji: "🦍", dano: 5 },
-        { x: 450, y: 400, direcao: 1, velocidade: 2, emoji: "🦍", dano: 5 }
+        { x: 350, y: 100, direcao: 1, velocidade: 4, emoji: "🦍", dano: 10 },
+        { x: 550, y: 200, direcao: 1, velocidade: 4, emoji: "🦍", dano: 10 },
+        { x: 650, y: 300, direcao: 1, velocidade: 4, emoji: "🦍", dano: 10 },
+        { x: 450, y: 400, direcao: 1, velocidade: 4, emoji: "🦍", dano: 10 }
     ];
     
     createItems();
@@ -619,9 +618,9 @@ function setupLevel2() {
     ];
     
     enemies = [
-        { x: 300, y: 100, direcao: 1, velocidade: 4, emoji: "😡🗡️", dano: 25 },
-        { x: 500, y: 200, direcao: -1, velocidade: 4, emoji: "😡🗡️", dano: 25 },
-        { x: 200, y: 300, direcao: 1, velocidade: 4, emoji: "😡🗡️", dano: 25 }
+        { x: 300, y: 100, direcao: 1, velocidade: 5, emoji: "😡🗡️", dano: 25 },
+        { x: 500, y: 200, direcao: -1, velocidade: 5, emoji: "😡🗡️", dano: 25 },
+        { x: 200, y: 300, direcao: 1, velocidade: 5, emoji: "😡🗡️", dano: 25 }
     ];
     
     createItems();
@@ -634,8 +633,8 @@ function setupLevel3() {
     ];
     
     enemies = [
-        { x: 200, y: 100, direcao: 1, velocidade: 4, emoji: "😡🗡️", dano: 25 },
-        { x: 600, y: 200, direcao: -1, velocidade: 4, emoji: "😡🗡️", dano: 25 }
+        { x: 200, y: 100, direcao: 1, velocidade: 6, emoji: "😡🗡️", dano: 25 },
+        { x: 600, y: 200, direcao: -1, velocidade: 6, emoji: "😡🗡️", dano: 25 }
     ];
     
     createItems();
@@ -645,8 +644,17 @@ function setupLevel3() {
 
 function setupLevel4(){
     items = [
+        { x: 710, y: 350, tipo: "cura", emoji: "❤️", valor: 0 },
+        { x: 710, y: 350, tipo: "cura", emoji: "❤️", valor: 0 }
+    ];
 
-    ]
+    enemies = [
+        { x:300, y:100, direcao:1, velocidade:8, emoji:"🗡️🏇🗡️", dano: 520},
+        { x:500, y:250, direcao:1, velocidade:8, emoji:"🗡️🏇🗡️", dano: 520}
+    ];
+
+    createItems();
+    createEnemies();
 }
 
 function createExitDoor() {
@@ -667,7 +675,7 @@ function checkLevelComplete() {
     const level = levels[currentLevel];
     
     if (currentLevel === 1 && itemsCollected >= level.itemsNeeded) {
-        alert("🎉 Fase 1 Completa! Você coletou todos os itens!");
+        alert("🎉 Fase 1 Completa! Você resgatou seus companheiros.");
         startLevel(2);
         return;
     }
@@ -687,6 +695,7 @@ function checkLevelComplete() {
         
         if (distanceX < 1000 && distanceY < 1000 ) {
             if (hasKey) {
+                alert("🎉 Parabéns! Você está a um passo de ser glorioso.")
                 startLevel(4);
             } else {
                 alert("🚪 A porta está trancada! Você precisa encontrar a CHAVE 🔑 primeiro!");
@@ -694,7 +703,20 @@ function checkLevelComplete() {
             }
         }
     }
-}
+    
+    if (currentLevel === 4) {
+        if (enemies.length === 0 && enemiesDefeated >= 1) {
+            setTimeout(function() {
+            alert("🏆 Você venceu o inimigo! E então começou sua carreira como um dos maiores gladiadores do Coliseu.");
+            alert("Jogo Concluído! Seus dados foram: \n\nNome: " + character.nome + "\nClasse: " + character.classe + "\nNível: " + character.nivel + "\nEXP: " + character.experiencia + "\nVida: " + character.vida + "/" + character.vidaMaxima);
+            location.reload();
+            }, 100); 
+            return;
+        }
+        }
+    }
+
+
 
 // ===================================
 // ATUALIZAÇÃO DO PAINEL DE INFORMAÇÕES
